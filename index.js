@@ -3,9 +3,9 @@ const app = express();
 const axios = require("axios");
 
 const BASIC_URL = "https://api.twitter.com/2/";
-const USER_PATH = "users/by/username/kritisanon?user.fields=created_at,description,entities,id,location,name,pinned_tweet_id,profile_image_url,protected,public_metrics,url,username,verified,withheld&tweet.fields=attachments,author_id,context_annotations,conversation_id,created_at,entities,geo,id,in_reply_to_user_id,lang,non_public_metrics,organic_metrics,possibly_sensitive,promoted_metrics,public_metrics,referenced_tweets,source,text";
-const USER_TWEET_PATH = "users/137017726/tweets?tweet.fields=attachments,author_id,context_annotations,conversation_id,created_at,entities,geo,id,in_reply_to_user_id,lang,possibly_sensitive,public_metrics,referenced_tweets,reply_settings,source,text,withheld&user.fields=created_at,description,entities,id,location,name,pinned_tweet_id,profile_image_url,protected,public_metrics,url,username,verified";
-const USER_MENTION_PATH = "users/137017726/mentions?tweet.fields=attachments,author_id,context_annotations,conversation_id,created_at,entities,geo,id,in_reply_to_user_id,lang,possibly_sensitive,public_metrics,referenced_tweets,reply_settings,source,text,withheld";
+const USER_PATH = "users/by/username/elonmusk?user.fields=created_at,description,entities,id,location,name,pinned_tweet_id,profile_image_url,protected,public_metrics,url,username,verified,withheld&tweet.fields=attachments,author_id,context_annotations,conversation_id,created_at,entities,geo,id,in_reply_to_user_id,lang,non_public_metrics,organic_metrics,possibly_sensitive,promoted_metrics,public_metrics,referenced_tweets,source,text";
+const USER_TWEET_PATH = "users/44196397/tweets?tweet.fields=attachments,author_id,context_annotations,conversation_id,created_at,entities,geo,id,in_reply_to_user_id,lang,possibly_sensitive,public_metrics,referenced_tweets,reply_settings,source,text,withheld&user.fields=created_at,description,entities,id,location,name,pinned_tweet_id,profile_image_url,protected,public_metrics,url,username,verified";
+const USER_MENTION_PATH = "users/44196397/mentions?tweet.fields=attachments,author_id,context_annotations,conversation_id,created_at,entities,geo,id,in_reply_to_user_id,lang,possibly_sensitive,public_metrics,referenced_tweets,reply_settings,source,text,withheld";
 const BEARER_TOKEN = "AAAAAAAAAAAAAAAAAAAAACCiZgEAAAAAHiLrAtS4SoUfnKoCSJ045B0JwqA%3DbftuB6RiaA4i2yFj3GT5KJ3bqWcYtBXjmTXyJo8woi50SAwuhB";
 
 app.use(function(req, res, next) {
@@ -278,25 +278,6 @@ app.get("/",(req,res) => {
     res.send("Hello World");
 });
 
-const getUserTweetsData = async (userId) => {
-    const options = {
-        method: 'GET',
-        url: BASIC_URL + USER_TWEET_PATH,
-        headers: {
-            'content-type': 'application/json',
-            'authorization': `Bearer ${BEARER_TOKEN}`
-        },
-    };
-
-    await axios.request(options).then(function (response) {
-        // console.log("User Tweets Response ==> ",response.data);
-        return response;
-    }).catch(function (error) {
-        console.error("User Tweets Error ==> ",error);
-        return "Something Went Wrong....";
-    });
-}
-
 app.get("/getUserDataByName",(req, res) => {
     const options = {
         method: 'GET',
@@ -308,7 +289,7 @@ app.get("/getUserDataByName",(req, res) => {
     };
 
     axios.request(options).then(function (response) {
-        console.log("User Response ==> ",response.data);
+        // console.log("User Response ==> ",response.data);
         const userData = response.data;
         // const userId = response.data.id;
         // console.log("userId  ==> ",userId);
@@ -334,11 +315,9 @@ app.get("/getUserDataByName",(req, res) => {
             }
             res.send({...responseData});
         }).catch(function (error) {
-            console.error("User Tweets Error ==> ",error);
             res.send("Something Went Wrong....");
         });
     }).catch(function (error) {
-        console.error("Twitter User Error ==> ",error);
         res.send("Something Went Wrong....");
     });
 });
